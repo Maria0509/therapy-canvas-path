@@ -1,4 +1,5 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { SiteLayout } from "@/components/SiteLayout";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useT } from "@/lib/i18n";
@@ -33,38 +34,18 @@ const FAIXAS: Record<
   },
 };
 
-export const Route = createFileRoute("/workshops/$faixa")({
-  beforeLoad: ({ params }) => {
-    if (!(params.faixa in FAIXAS)) throw notFound();
-  },
-  head: ({ params }) => {
-    const f = FAIXAS[params.faixa as Faixa];
-    if (!f) return {};
-    return {
-      meta: [
-        { title: `Workshop ${params.faixa} · Carol Guaiato` },
-        {
-          name: "description",
-          content: `Workshop de pintura em tela para ${params.faixa} anos com Carol Guaiato.`,
-        },
-        { property: "og:image", content: f.img },
-      ],
-    };
-  },
-  component: WorkshopPage,
-  notFoundComponent: () => (
-    <SiteLayout>
-      <div className="mx-auto max-w-xl px-5 py-24 text-center">
-        <h1 className="font-display text-3xl">Workshop não encontrado</h1>
-        <Link to="/" className="mt-6 inline-block text-primary hover:underline">Voltar ao início</Link>
-      </div>
-    </SiteLayout>
-  ),
-});
-
-function WorkshopPage() {
-  const { faixa } = Route.useParams();
+export default function WorkshopPage() {
+  const { faixa } = useParams<{ faixa: string }>();
   const { t } = useT();
+
+  useEffect(() => {
+    document.title = `Workshop ${faixa} · Carol Guaiato`;
+  }, [faixa]);
+
+  if (!faixa || !(faixa in FAIXAS)) {
+    return <Navigate to="/" replace />;
+  }
+
   const data = FAIXAS[faixa as Faixa];
 
   return (

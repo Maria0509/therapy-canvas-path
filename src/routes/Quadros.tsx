@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useT } from "@/lib/i18n";
@@ -10,21 +10,6 @@ import q5 from "@/assets/quadro-5.jpg";
 import q6 from "@/assets/quadro-6.jpg";
 import q7 from "@/assets/quadro-7.jpg";
 import q8 from "@/assets/quadro-8.jpg";
-
-export const Route = createFileRoute("/quadros")({
-  head: () => ({
-    meta: [
-      { title: "Quadros · Carol Guaiato" },
-      {
-        name: "description",
-        content:
-          "Quadros originais à venda, pintados à mão no ateliê da Carol Guaiato.",
-      },
-      { property: "og:image", content: q3 },
-    ],
-  }),
-  component: PaintingsPage,
-});
 
 type Painting = { src: string; title: string; size: string };
 
@@ -39,8 +24,12 @@ const paintings: Painting[] = [
   { src: q8, title: "Borboletas", size: "50 × 50 cm" },
 ];
 
-function PaintingsPage() {
+export default function PaintingsPage() {
   const { t } = useT();
+  useEffect(() => {
+    document.title = "Quadros · Carol Guaiato";
+  }, []);
+
   return (
     <SiteLayout>
       <section className="mx-auto max-w-4xl px-5 py-16 text-center">

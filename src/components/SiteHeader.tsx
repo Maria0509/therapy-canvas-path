@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useT } from "@/lib/i18n";
 import { WhatsAppButton } from "./WhatsAppButton";
@@ -7,6 +7,9 @@ export function SiteHeader() {
   const { t, lang, setLang } = useT();
   const [open, setOpen] = useState(false);
   const [workshopsOpen, setWorkshopsOpen] = useState(false);
+
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `transition-colors hover:text-primary ${isActive ? "text-primary" : "text-foreground/80"}`;
 
   return (
     <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur-md">
@@ -19,14 +22,9 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-7 text-sm md:flex">
-          <Link
-            to="/"
-            activeOptions={{ exact: true }}
-            activeProps={{ className: "text-primary" }}
-            className="text-foreground/80 transition-colors hover:text-primary"
-          >
+          <NavLink to="/" end className={navLinkClass}>
             {t("nav_home")}
-          </Link>
+          </NavLink>
           <div
             className="relative"
             onMouseEnter={() => setWorkshopsOpen(true)}
@@ -38,38 +36,25 @@ export function SiteHeader() {
             {workshopsOpen && (
               <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3">
                 <div className="min-w-[200px] rounded-2xl border border-border bg-card p-2 shadow-lg">
-                  <Link
-                    to="/workshops/$faixa"
-                    params={{ faixa: "10-15" }}
-                    className="block rounded-xl px-3 py-2 text-sm hover:bg-muted"
-                  >
+                  <Link to="/workshops/10-15" className="block rounded-xl px-3 py-2 text-sm hover:bg-muted">
                     {t("nav_age_10_15")}
                   </Link>
-                  <Link
-                    to="/workshops/$faixa"
-                    params={{ faixa: "15-20" }}
-                    className="block rounded-xl px-3 py-2 text-sm hover:bg-muted"
-                  >
+                  <Link to="/workshops/15-20" className="block rounded-xl px-3 py-2 text-sm hover:bg-muted">
                     {t("nav_age_15_20")}
                   </Link>
-                  <Link
-                    to="/workshops/$faixa"
-                    params={{ faixa: "20-mais" }}
-                    className="block rounded-xl px-3 py-2 text-sm hover:bg-muted"
-                  >
+                  <Link to="/workshops/20-mais" className="block rounded-xl px-3 py-2 text-sm hover:bg-muted">
                     {t("nav_age_20_mais")}
                   </Link>
                 </div>
               </div>
             )}
           </div>
-          <Link
-            to="/quadros"
-            activeProps={{ className: "text-primary" }}
-            className="text-foreground/80 transition-colors hover:text-primary"
-          >
+          <NavLink to="/quadros" className={navLinkClass}>
             {t("nav_paintings")}
-          </Link>
+          </NavLink>
+          <NavLink to="/contacto" className={navLinkClass}>
+            {t("nav_contact")}
+          </NavLink>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -116,36 +101,20 @@ export function SiteHeader() {
             <Link to="/" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 hover:bg-muted">
               {t("nav_home")}
             </Link>
-            <Link
-              to="/workshops/$faixa"
-              params={{ faixa: "10-15" }}
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2 hover:bg-muted"
-            >
+            <Link to="/workshops/10-15" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 hover:bg-muted">
               {t("nav_workshops")} · {t("nav_age_10_15")}
             </Link>
-            <Link
-              to="/workshops/$faixa"
-              params={{ faixa: "15-20" }}
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2 hover:bg-muted"
-            >
+            <Link to="/workshops/15-20" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 hover:bg-muted">
               {t("nav_workshops")} · {t("nav_age_15_20")}
             </Link>
-            <Link
-              to="/workshops/$faixa"
-              params={{ faixa: "20-mais" }}
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2 hover:bg-muted"
-            >
+            <Link to="/workshops/20-mais" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 hover:bg-muted">
               {t("nav_workshops")} · {t("nav_age_20_mais")}
             </Link>
-            <Link
-              to="/quadros"
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2 hover:bg-muted"
-            >
+            <Link to="/quadros" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 hover:bg-muted">
               {t("nav_paintings")}
+            </Link>
+            <Link to="/contacto" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 hover:bg-muted">
+              {t("nav_contact")}
             </Link>
             <div className="flex items-center gap-2 px-3 pt-2">
               <button

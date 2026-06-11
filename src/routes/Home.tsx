@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import { SiteLayout } from "@/components/SiteLayout";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { useT } from "@/lib/i18n";
@@ -11,29 +12,12 @@ import q2 from "@/assets/quadro-2.jpg";
 import q3 from "@/assets/quadro-3.jpg";
 import q4 from "@/assets/quadro-4.jpg";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Carol Guaiato · Arte Terapia & Pintura em Tela" },
-      {
-        name: "description",
-        content:
-          "Workshops de pintura em tela para terapia e convívio. Grupos por idade (10-15, 15-20, 20+) com a Carol Guaiato.",
-      },
-      { property: "og:title", content: "Carol Guaiato · Arte Terapia" },
-      {
-        property: "og:description",
-        content: "Pintar é cuidar de si — e estar com os outros.",
-      },
-      { property: "og:image", content: heroImg },
-      { name: "twitter:image", content: heroImg },
-    ],
-  }),
-  component: HomePage,
-});
-
-function HomePage() {
+export default function HomePage() {
   const { t } = useT();
+  useEffect(() => {
+    document.title = "Carol Guaiato · Arte Terapia & Pintura em Tela";
+  }, []);
+
   const groups = [
     { id: "10-15", title: t("age_10_15_title"), desc: t("age_10_15_desc"), img: age1015 },
     { id: "15-20", title: t("age_15_20_title"), desc: t("age_15_20_desc"), img: age1520 },
@@ -42,7 +26,6 @@ function HomePage() {
 
   return (
     <SiteLayout>
-      {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:py-24">
           <div>
@@ -78,7 +61,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* About */}
       <section className="mx-auto max-w-4xl px-5 py-20 text-center">
         <p className="text-xs uppercase tracking-[0.22em] text-primary">{t("about_eyebrow")}</p>
         <h2 className="mt-4 font-display text-3xl md:text-4xl">{t("about_title")}</h2>
@@ -87,7 +69,6 @@ function HomePage() {
         </p>
       </section>
 
-      {/* Workshops */}
       <section className="bg-[oklch(0.96_0.02_10)] py-20">
         <div className="mx-auto max-w-6xl px-5">
           <div className="mx-auto max-w-2xl text-center">
@@ -101,8 +82,7 @@ function HomePage() {
             {groups.map((g) => (
               <Link
                 key={g.id}
-                to="/workshops/$faixa"
-                params={{ faixa: g.id }}
+                to={`/workshops/${g.id}`}
                 className="group overflow-hidden rounded-3xl border border-border bg-card transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10"
               >
                 <div className="overflow-hidden">
@@ -128,7 +108,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Gallery preview */}
       <section className="mx-auto max-w-6xl px-5 py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -137,10 +116,7 @@ function HomePage() {
             </p>
             <h2 className="mt-3 font-display text-3xl md:text-4xl">{t("gallery_title")}</h2>
           </div>
-          <Link
-            to="/quadros"
-            className="text-sm font-medium text-primary hover:underline"
-          >
+          <Link to="/quadros" className="text-sm font-medium text-primary hover:underline">
             {t("see_all_paintings")} →
           </Link>
         </div>
@@ -160,7 +136,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Final CTA */}
       <section className="mx-auto max-w-5xl px-5 pb-20">
         <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-accent px-8 py-14 text-center text-primary-foreground shadow-xl shadow-primary/20">
           <h2 className="mx-auto max-w-2xl font-display text-3xl md:text-4xl">
