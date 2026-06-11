@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useT } from "@/lib/i18n";
 import { WhatsAppButton } from "./WhatsAppButton";
 
@@ -17,10 +17,11 @@ export function SiteFooter() {
           </h4>
           <ul className="mt-3 space-y-2 text-sm">
             <li><Link to="/" className="hover:text-primary">{t("nav_home")}</Link></li>
-            <li><Link to="/workshops/$faixa" params={{ faixa: "10-15" }} className="hover:text-primary">{t("nav_age_10_15")}</Link></li>
-            <li><Link to="/workshops/$faixa" params={{ faixa: "15-20" }} className="hover:text-primary">{t("nav_age_15_20")}</Link></li>
-            <li><Link to="/workshops/$faixa" params={{ faixa: "20-mais" }} className="hover:text-primary">{t("nav_age_20_mais")}</Link></li>
+            <li><Link to="/workshops/10-15" className="hover:text-primary">{t("nav_age_10_15")}</Link></li>
+            <li><Link to="/workshops/15-20" className="hover:text-primary">{t("nav_age_15_20")}</Link></li>
+            <li><Link to="/workshops/20-mais" className="hover:text-primary">{t("nav_age_20_mais")}</Link></li>
             <li><Link to="/quadros" className="hover:text-primary">{t("nav_paintings")}</Link></li>
+            <li><Link to="/contacto" className="hover:text-primary">{t("nav_contact")}</Link></li>
           </ul>
         </div>
         <div>
